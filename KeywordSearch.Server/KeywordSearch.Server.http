@@ -1,0 +1,6 @@
+@KeywordSearch.Server_HostAddress = http://localhost:5195
+
+GET {{KeywordSearch.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
