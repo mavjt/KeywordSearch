@@ -1,20 +1,35 @@
+using KeywordSearch.Core.Interfaces;
+using KeywordSearch.Infrastructure.Interfaces;
+using KeywordSearch.Web.Config;
+using Serilog;
+using Serilog.Debugging;
+using Serilog.Extensions.Logging;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddServiceConfigs( builder);
+
 
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseSerilogRequestLogging();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
