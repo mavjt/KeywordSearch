@@ -1,31 +1,47 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import ShowHistoryButton from "./ShowHistoryButton";
+import SearchForm from "./SearchForm";
 
 function App() {
-    const [forecasts, setForecasts] = useState();
+    const [history, setHistory] = useState();
+    const [engineLabels, setEngineLabels] = useState([]);      
+  
 
     useEffect(() => {
-        populateWeatherData();
+        getAvailableEngines();
     }, []);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
+
+    async function populateHistory() {
+        const response = await fetch('api/SearchHistory');
+        if (response.ok) {
+            const data = await response.json();
+            setHistory(data);
+        }
+    }
+
+    const contents = history === undefined
+
+        ? <p><em>To see the history, click 'View history' or start a new search above.</em></p>
         : <table className="table table-striped" aria-labelledby="tableLabel">
             <thead>
                 <tr>
+                    <th>Keywords</th>
+                    <th>Url</th>
+                    <th>SearchEngine</th>
+                    <th>Results</th>
                     <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
                 </tr>
             </thead>
             <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
+                {history.map(row =>
+                    <tr key={row.searchDate}>
+                        <td>{row.keywords}</td>
+                        <td>{row.url}</td>
+                        <td>{row.searchEngine}</td>
+                        <td>{row.sesults}</td>
+                        <td>{formatDate(row.searchDate)}</td>
                     </tr>
                 )}
             </tbody>
@@ -33,19 +49,37 @@ function App() {
 
     return (
         <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
+            <h1 id="tableLabel">Search Engine Tool</h1>
+           
+            <SearchForm availableEngines={engineLabels} populateHistory={() => populateHistory()} />
+            <hr />
+            <p>Results</p>
+            <ShowHistoryButton handleClick={populateHistory} />
             {contents}
         </div>
     );
+    function formatDate(dt) {
+        let actualdt = new Date(dt);
+        return actualdt.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        })
+    }
     
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
+
+    async function getAvailableEngines() {
+        const response = await fetch('api/SearchEngineLookup');
         if (response.ok) {
             const data = await response.json();
-            setForecasts(data);
+            setEngineLabels(data);
         }
+
     }
+
+
+    
+
 }
 
 export default App;

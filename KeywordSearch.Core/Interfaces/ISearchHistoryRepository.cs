@@ -10,5 +10,6 @@ namespace KeywordSearch.Core.Interfaces
     public interface ISearchHistoryRepository
     {
         Task Save(SearchHistory search);
+        IQueryable<SearchHistory> GetAll();
     }
 }

@@ -1,8 +1,9 @@
-﻿using KeywordSearch.Server;
+﻿using KeywordSearch.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using KeywordSearch.Core.Interfaces;
 using KeywordSearch.Infrastructure.DTOs;
 using KeywordSearch.Core.Types;
+using KeywordSearch.Core.Data;
 
 namespace KeywordSearch.Web.Controllers
 {
@@ -12,28 +13,24 @@ namespace KeywordSearch.Web.Controllers
     {
         private readonly ISearchScraperService _searchScraperService;
         private readonly ILogger<SearchEngineLookupController> _logger;
+        
+
         public SearchEngineLookupController(ISearchScraperService searchScraperService, ILogger<SearchEngineLookupController> logger)
         {
             this._searchScraperService = searchScraperService;
             this._logger = logger;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> StartAsync(SearchRequestDto requestDto)
-        {
-            _logger.LogDebug("StartAsync called {@0}", requestDto);
-            await _searchScraperService.StartSearch(requestDto.Keywords, requestDto.Url, requestDto.SearchEngines);
             
-
-            return NoContent();
-        }
+        }       
 
         [HttpGet]
-        public IEnumerable<string> GetAvailableSearchEngines()
+        public IEnumerable<SearchEngine> GetAvailableSearchEngines()
         {
-            _logger.LogWarning("GetAvailableSearchEngines called ");
-            return SearchEngine.List.Select(o => o.Name);
+            _logger.LogDebug("GetAvailableSearchEngines called ");
+            return SearchEngine.List;
 
         }
+
+
+       
     }
 }

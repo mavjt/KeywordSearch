@@ -1,4 +1,5 @@
-﻿using KeywordSearch.Core.Types;
+﻿using Flurl;
+using KeywordSearch.Core.Types;
 using KeywordSearch.Infrastructure.Repos;
 using KeywordSearch.Infrastructure.Services.Scrapers;
 
@@ -25,7 +26,14 @@ public class SearchScraperService : ISearchScraperService
 
             var Scraper = scraperFactory.Create(engine);
             var randResult = await Scraper.ProcessAsync(keywords, UrlToMatch);
-            await historyRepository.Save(new SearchHistory(keywords, UrlToMatch, engine, randResult));
+            var history = new SearchHistory {
+                Keywords = keywords,
+                Url = UrlToMatch,
+                SearchEngine = engine.Name,
+                Result = String.Join(",", randResult),
+                SearchCompleted = DateTime.Now
+            };
+            await historyRepository.Save(history);
         }
 
         

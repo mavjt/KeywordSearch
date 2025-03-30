@@ -9,3 +9,29 @@ th, td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid;
+}
+
+#keywordsearch  {
+    text-align: left;
+}
+
+ul.engines {
+    border: 1px solid white;
+    padding: 5px;
+
+}
+ul.engines li {
+    list-style:none;
+    margin: 5px 0;
+    padding: 5px;
+}
+    ul.engines li label {
+     
+    }

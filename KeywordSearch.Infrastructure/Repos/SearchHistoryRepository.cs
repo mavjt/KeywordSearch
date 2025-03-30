@@ -1,12 +1,27 @@
 ﻿
 
+
+using KeywordSearch.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace KeywordSearch.Infrastructure.Repos
 {
     public class SearchHistoryRepository : ISearchHistoryRepository
     {
-        public Task Save(SearchHistory search)
+        private readonly HistoryContext db;
+
+        public SearchHistoryRepository(HistoryContext db)
         {
-            throw new NotImplementedException();
+            this.db = db;
+        }
+        public IQueryable<SearchHistory> GetAll()
+        {
+            return  db.SearchHistories;
+        }
+
+        public async Task Save(SearchHistory search)
+        {
+            
         }
     }
 }

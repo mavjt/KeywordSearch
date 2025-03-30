@@ -1,4 +1,6 @@
-﻿namespace KeywordSearch.Infrastructure.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record SearchRequestDto(string Keywords, string Url, List<string> SearchEngines);
+namespace KeywordSearch.Infrastructure.DTOs;
+
+public record SearchRequestDto([Required] string Keywords, [Required] string Url, List<string> SearchEngines);
 //todo make a URL type for better matching
