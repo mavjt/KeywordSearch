@@ -48,7 +48,7 @@ function App() {
         </table>;
 
     return (
-        <div>
+        <div className="container">
             <h1 id="tableLabel">Search Engine Tool</h1>
            
             <SearchForm availableEngines={engineLabels} populateHistory={() => populateHistory()} />

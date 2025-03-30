@@ -1,15 +1,15 @@
 import { React } from "react";
 
-export default function Checkbox({ name, value = false, updateValue = () => { }, children }) {
+export default function Checkbox({  register, labelObj }) {
     // handle checkbox change
-    const handleChange = () => {
-        updateValue(!value, name);
-    };
+    //const handleChange = () => {
+    //    updateValue(!value, name);
+    //};
     // render the checkbox
     return (
-        <div className="py-2">
-            <input type="checkbox" id={`${name}-checkbox`} name={name} checked={value} onChange={handleChange} />
-            <label htmlFor={`${name}-checkbox`} >{children}</label>
+        <div >
+            <input type="checkbox" id={`${labelObj.name}-checkbox`} value={labelObj.name}   {...register("searchEngines", { required: "At least one search engine required" })} />
+            <label htmlFor={`${labelObj.name}-checkbox`} >{labelObj.name}</label>
         </div>
     );
 };

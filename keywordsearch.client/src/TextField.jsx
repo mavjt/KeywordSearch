@@ -1,30 +1,29 @@
 import React from "react";
 
-
-export default function TextField({ fieldlabel, value, onTextChange }) {
-
-    //const [error, setError] = useState('');
-    function handleTextareaChange(e) {
-        onTextChange(e.target.value);
-        //if (!value.trim()) {
-        //    setError('This field is required.');
-        //} else {
-        //    setError('');
-        //}
-
-    }
+export default function TextField({ label, field, register, required, errMsg }) {
+    
     return (
-        <label>
-            {fieldlabel}:
-            <input
-                type="text"
-                value={value}
-                required
-                //ref={inputRef}
-                onChange={handleTextareaChange}               
-                style={{ margin: '10px' }}
-            />
-        </label>
+            <div className="row">
+                <div className="col-25">
+                <label htmlFor={field} >{label}</label>
+                </div>
+                <div className="col-75">
+                    <input
+                    type="text"
+                    id={field}
+                        //value={value}
+                    {...register(field, required)}
+                       // {required: `${label} required` })}
+                        //ref={inputRef}
+                        //onChange={handleTextareaChange}
+                        style={{ margin: '10px' }}
+                    />
 
-    )
+                <p className="errors">{errMsg}</p>
+                </div>
+            </div>
+
+        
+        )
+
 }

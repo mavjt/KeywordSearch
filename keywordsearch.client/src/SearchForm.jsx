@@ -2,26 +2,36 @@ import { React, useState, useRef } from 'react';
 import SearchButton from "./SearchButton";
 import TextField from "./TextField";
 import SearchEngineList from "./SearchEngineList";
+import { useForm } from "react-hook-form"
 
+import Checkbox from "./CheckBox";
 export default function SearchForm({ availableEngines, populateHistory }) {
     const [isWaiting, setIsWaiting] = useState(false);
-    const [keywordText, setKeywordText] = useState('');
-    const [urlText, setUrlText] = useState('');
-    const [selectedEngines, setSelectedEngines] = useState([]);
+    //const [keywordText, setKeywordText] = useState('');
+    //const [urlText, setUrlText] = useState('');
+    //const [selectedEngines, setSelectedEngines] = useState([]);
     const formRef = useRef(null);
 
-    async function startNewSearch(e) {
-        e.preventDefault();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: { keywords: "", url: "", searchEngines :[] } }) 
+
+    const onSubmitTest = function(data) {
+        console.log(errors);
+        console.log(data)
+      
+    }
+    async function startNewSearch(data) {
+        //e.preventDefault();
        
         setIsWaiting(true);
-        console.log(`${keywordText} - ${urlText}`);
-        console.log(selectedEngines);
-        setIsWaiting(false);
+        //console.log(`${keywordText} - ${urlText}`);
+        console.log(data);
+        
         
         try {
             const response = await fetch('api/KeywordSearch', {
                 method: 'POST',
-                body: JSON.stringify({ keywords: keywordText, url: urlText, searchEngines: selectedEngines }),
+                body: JSON.stringify(data), //JSON.stringify({ keywords: keywordText, url: urlText, searchEngines: selectedEngines }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -46,26 +56,28 @@ export default function SearchForm({ availableEngines, populateHistory }) {
         setIsWaiting(false);
     }
 
+    const ValidatorRequired = { required: "Keywords are  required" };
+    const ValidatorUrl = {
+        required: "Url required", pattern: {
+            value: /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
+            message: "That doesn't look like a website."
+        },
+    };
 
     return (
         <>
-            <form ref={formRef} id="keywordsearch" onSubmit={(e) => startNewSearch(e).then(res => {
-                if (!res) {
-                    console.log('reset');
-                    formRef.current.reset();
-                }
-            })}>
-                <div>
-                    <TextField fieldlabel="Keywords" id="txtKeywords" value={keywordText} onTextChange={setKeywordText} />
+            <form ref={formRef} id="keywordsearch" onSubmit={handleSubmit(startNewSearch)}>
+                <TextField label="Keywords" field="keywords" register={register} required={ValidatorRequired} errMsg={errors.keywords?.message} />
+                <TextField label="Url to match" field="url" register={register} required={ValidatorUrl} errMsg={errors.url?.message} />
+                
+                <div className="row">
+                    {availableEngines.length > 0 && <SearchEngineList labels={availableEngines} register={register} errMsg={errors} />}
+                    <p className="errors">{errors.searchEngines?.message}</p>
                 </div>
-                <div>
-                    <TextField fieldlabel='Url to match' value={urlText} onTextChange={setUrlText} />
-                </div>
-                <div>
-                    {availableEngines.length > 0 && <SearchEngineList labels={availableEngines} selected={selectedEngines} setSelected={setSelectedEngines} />}
-                </div>
-                <div>
-                    <SearchButton  isWaiting={isWaiting} />
+                <div className="row">  
+                    
+                    <SearchButton isWaiting={isWaiting} />
+                    
                 </div>
             </form>
         </>
