@@ -21,7 +21,8 @@ namespace KeywordSearch.Infrastructure.Repos
 
         public async Task Save(SearchHistory search)
         {
-            
+            db.SearchHistories.Add(search);
+            await db.SaveChangesAsync();
         }
     }
 }

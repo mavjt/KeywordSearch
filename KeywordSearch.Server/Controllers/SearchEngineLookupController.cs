@@ -1,9 +1,6 @@
-﻿using KeywordSearch.Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
-using KeywordSearch.Core.Interfaces;
-using KeywordSearch.Infrastructure.DTOs;
+﻿using KeywordSearch.Core.Interfaces;
 using KeywordSearch.Core.Types;
-using KeywordSearch.Core.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KeywordSearch.Web.Controllers
 {
@@ -25,8 +22,10 @@ namespace KeywordSearch.Web.Controllers
         [HttpGet]
         public IEnumerable<SearchEngine> GetAvailableSearchEngines()
         {
-            _logger.LogDebug("GetAvailableSearchEngines called ");
+            _logger.LogInformation("GetAvailableSearchEngines called ");
             return SearchEngine.List;
+            //IConfiguration Configuration;
+            //Configuration.GetValue<int>("SearchItemsMax", 10);
 
         }
 

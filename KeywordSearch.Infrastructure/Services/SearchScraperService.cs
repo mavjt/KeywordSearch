@@ -7,10 +7,10 @@ namespace KeywordSearch.Infrastructure.Interfaces;
 
 public class SearchScraperService : ISearchScraperService
 {
-    private readonly ScraperFactory scraperFactory;
+    private readonly ConcreteScraperFactory scraperFactory;
     private readonly ISearchHistoryRepository historyRepository;
 
-    public SearchScraperService(ScraperFactory scraperFactory, ISearchHistoryRepository repo)
+    public SearchScraperService(ConcreteScraperFactory scraperFactory, ISearchHistoryRepository repo)
     {
         this.scraperFactory = scraperFactory;
         this.historyRepository = repo;
@@ -26,6 +26,7 @@ public class SearchScraperService : ISearchScraperService
 
             var Scraper = scraperFactory.Create(engine);
             var randResult = await Scraper.ProcessAsync(keywords, UrlToMatch);
+
             var history = new SearchHistory {
                 Keywords = keywords,
                 Url = UrlToMatch,

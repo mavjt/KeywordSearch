@@ -32,7 +32,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
-    app.UseSerilogRequestLogging();
+    //app.UseSerilogRequestLogging();
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseCors(x => x.AllowAnyOrigin()

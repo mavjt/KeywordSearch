@@ -5,11 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace KeywordSearch.Infrastructure.Services.Scrapers
 {
-    public  class ScraperFactory
+    public  class ConcreteScraperFactory
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ScraperFactory(IServiceProvider serviceProvider)
+        public ConcreteScraperFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

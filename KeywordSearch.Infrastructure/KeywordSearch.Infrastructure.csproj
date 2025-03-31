@@ -10,6 +10,7 @@
     <PackageReference Include="Flurl.Http" Version="4.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,7 +14,7 @@ namespace KeywordSearch.Server.Controllers
         private readonly ILogger<KeywordSearchController> _logger;
 
 
-        public KeywordSearchController(ISearchScraperService searchScraperService, ILogger<KeywordSearchController> logger)
+        public KeywordSearchController(ISearchScraperService searchScraperService, ILogger<KeywordSearchController> logger, IHostEnvironment hostingEnvironment)
         {
             this._searchScraperService = searchScraperService;
             this._logger = logger;
@@ -24,11 +24,12 @@ namespace KeywordSearch.Server.Controllers
         [HttpPost]        
         public async Task<IActionResult> StartAsync(SearchRequestDto requestDto)
         {
-            _logger.LogDebug("StartAsync called {@0}", requestDto);
+            _logger.LogInformation("StartAsync called {@0}", requestDto);
 
 
             await _searchScraperService.StartSearch(requestDto.Keywords, requestDto.Url, requestDto.SearchEngines);
-            await Task.Delay(3000);
+            
+            await Task.Delay(3000); 
 
             return Ok("Search complete");
         }

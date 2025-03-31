@@ -24,7 +24,7 @@ namespace KeywordSearch.Web.Controllers
         [HttpGet]
         public IEnumerable<SearchHistoryDto> Get()
         {
-            _logger.LogDebug("GetHistory called ");
+            _logger.LogInformation("GetHistory called ");
             return (_searchHistoryRepository.GetAll()).Select(o => o.Map());
 
         }
