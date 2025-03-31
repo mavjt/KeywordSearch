@@ -27,13 +27,9 @@ public class SearchScraperService : ISearchScraperService
             var Scraper = scraperFactory.Create(engine);
             var randResult = await Scraper.ProcessAsync(keywords, UrlToMatch);
 
-            var history = new SearchHistory {
-                Keywords = keywords,
-                Url = UrlToMatch,
-                SearchEngine = engine.Name,
-                Result = String.Join(",", randResult),
-                SearchCompleted = DateTime.Now
-            };
+            var history = new SearchHistory(keywords, UrlToMatch, engine.Name, String.Join(",", randResult));
+            
+           
             await historyRepository.Save(history);
         }
 

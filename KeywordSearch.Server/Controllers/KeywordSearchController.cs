@@ -26,10 +26,7 @@ namespace KeywordSearch.Server.Controllers
         {
             _logger.LogInformation("StartAsync called {@0}", requestDto);
 
-
-            await _searchScraperService.StartSearch(requestDto.Keywords, requestDto.Url, requestDto.SearchEngines);
-            
-            await Task.Delay(3000); 
+            await _searchScraperService.StartSearch(requestDto.Keywords, requestDto.Url, requestDto.SearchEngines);            
 
             return Ok("Search complete");
         }

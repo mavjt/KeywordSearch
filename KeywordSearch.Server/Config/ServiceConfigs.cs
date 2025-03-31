@@ -22,7 +22,7 @@ namespace KeywordSearch.Web.Config
 
 
             builder.Services.AddHttpClient<BaseScraper>();
-           
+            builder.Services.AddScoped<IHTMLParser, HTMLParser>();
             builder.Services.AddTransient<ConcreteScraperFactory>();
             builder.Services.AddScoped<ISearchScraperService, SearchScraperService>();
             builder.Services.AddScoped<ISearchHistoryRepository, SearchHistoryRepository>();

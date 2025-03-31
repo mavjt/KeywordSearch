@@ -9,8 +9,8 @@ namespace KeywordSearch.Infrastructure.Services
     public class SearchEngineConfig
     {
         public int SearchItemsMax { get; set; }
-        public List<EngineConfig> Engines { get; set; } = new List<EngineConfig>();
-        public EngineConfig GetEngineConfig(string Name) { return Engines.Single(o => o.Name == Name); }
+        public List<EngineConfig> Engines { get; set; } = new List<EngineConfig>();        
+        public EngineConfig GetEngineConfig(SearchEngine engine) { return Engines.Single(o => o.Name == engine.Name); }
     }
 
 
