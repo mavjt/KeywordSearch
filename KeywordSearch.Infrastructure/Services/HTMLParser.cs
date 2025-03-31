@@ -26,14 +26,14 @@ namespace KeywordSearch.Infrastructure.Services
             string pattern = $"<{elementName}[^>]*[^>]*>[(\\s\\S)]*?<\\/{elementName}>";
             var matches = Regex.Matches(html, pattern);
 
-            var cleaned =  matches.Select(x => RemoveTags("strong", x.Value)).ToList();
+            var cleaned =  matches.Select(x => RemoveTags("strong", x.Value)).ToList(); //some of the elements had weird strong tags inside
             return cleaned;
-            //return matches.Select(x => x.Value).ToList();
+            
         }
 
         private string RemoveTags(string tag, string input)
         {
-            return Regex.Replace(input, @"</?strong[^>]*>", "");
+            return Regex.Replace(input, $"</?{tag}[^>]*>", "");
         }
     }
 }

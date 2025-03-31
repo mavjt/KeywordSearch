@@ -4,15 +4,13 @@ namespace KeywordSearch.Core.Data;
 
 public class SearchHistory
 {
-    //public SearchHistory() { }
+   
     public SearchHistory(string keywords, string url, string searchEngine, string result)
     {
         Keywords = keywords;
         Url = url;
-        SearchEngine = searchEngine;
-        //Result = String.Join(",", scrapeResult);
-        Result = result;
-        //SearchCompleted = DateTime.Now;
+        SearchEngine = searchEngine;       
+        Result = result;       
     }
     public int Id { get; set; }
     public string Keywords { get; set; } 

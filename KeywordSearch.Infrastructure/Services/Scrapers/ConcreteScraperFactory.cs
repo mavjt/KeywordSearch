@@ -15,9 +15,7 @@ namespace KeywordSearch.Infrastructure.Services.Scrapers
         }
         public BaseScraper Create(SearchEngine searchEngine) {
 
-            //var type = System.Type.GetType($"{nameof(KeywordSearch.Infrastructure.Services.Scrapers)}.{searchEngine.Name}Scraper");
-            //return _serviceProvider.GetRequiredService<IScraper>(type);
-
+           
             //todo smarten up
             if (searchEngine == SearchEngine.Google)
                 return (BaseScraper)_serviceProvider.GetRequiredService(typeof(GoogleScraper));

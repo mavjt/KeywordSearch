@@ -24,8 +24,7 @@ namespace KeywordSearch.Web.Controllers
         {
             _logger.LogInformation("GetAvailableSearchEngines called ");
             return SearchEngine.List;
-            //IConfiguration Configuration;
-            //Configuration.GetValue<int>("SearchItemsMax", 10);
+           
 
         }
 

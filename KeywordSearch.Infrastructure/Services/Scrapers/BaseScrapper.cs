@@ -23,7 +23,7 @@ public abstract class BaseScraper
     
     public abstract Task<IEnumerable<int>> ProcessAsync(string keywords, string url);
 
-    protected static List<int> FindStringInList(string urlToFind, List<string> links) => Enumerable.Range(1, links.Count)
+    protected static List<int> FindStringInList(string urlToFind, List<string> links) => Enumerable.Range(0, links.Count)
                         .Where(i => links[i].Contains(urlToFind, StringComparison.InvariantCultureIgnoreCase))
                         .ToList();
 
