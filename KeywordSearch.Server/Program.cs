@@ -19,7 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 
-builder.Services.AddServiceConfigs( builder);
+builder.Services.AddServiceConfigs(builder.Configuration, builder);
 
 
 var app = builder.Build();

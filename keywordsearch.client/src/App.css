@@ -28,13 +28,13 @@ table, th, td {
 ul.engines {
     border: 1px solid white;
     padding: 5px;
-
+    text-align: center;
 }
-ul.engines li {
-    list-style:none;
-    margin: 5px 0;
-    padding: 5px;
-}
+    ul.engines li {
+        list-style: none;
+        display: inline-block;
+        padding: 3px 3rem;
+    }
     ul.engines li label {
      
     }

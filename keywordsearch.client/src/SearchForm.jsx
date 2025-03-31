@@ -4,12 +4,9 @@ import TextField from "./TextField";
 import SearchEngineList from "./SearchEngineList";
 import { useForm } from "react-hook-form"
 
-import Checkbox from "./CheckBox";
+
 export default function SearchForm({ availableEngines, populateHistory }) {
-    const [isWaiting, setIsWaiting] = useState(false);
-    //const [keywordText, setKeywordText] = useState('');
-    //const [urlText, setUrlText] = useState('');
-    //const [selectedEngines, setSelectedEngines] = useState([]);
+    const [isWaiting, setIsWaiting] = useState(false);    
     const formRef = useRef(null);
 
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -21,17 +18,14 @@ export default function SearchForm({ availableEngines, populateHistory }) {
       
     }
     async function startNewSearch(data) {
-        //e.preventDefault();
-       
         setIsWaiting(true);
-        //console.log(`${keywordText} - ${urlText}`);
+        
         console.log(data);
-        
-        
+
         try {
             const response = await fetch('api/KeywordSearch', {
                 method: 'POST',
-                body: JSON.stringify(data), //JSON.stringify({ keywords: keywordText, url: urlText, searchEngines: selectedEngines }),
+                body: JSON.stringify(data), 
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -71,7 +65,7 @@ export default function SearchForm({ availableEngines, populateHistory }) {
                 <TextField label="Url to match" field="url" register={register} required={ValidatorUrl} errMsg={errors.url?.message} />
                 
                 <div className="row">
-                    {availableEngines.length > 0 && <SearchEngineList labels={availableEngines} register={register} errMsg={errors} />}
+                     <SearchEngineList labels={availableEngines} register={register} errMsg={errors} />
                     <p className="errors">{errors.searchEngines?.message}</p>
                 </div>
                 <div className="row">  

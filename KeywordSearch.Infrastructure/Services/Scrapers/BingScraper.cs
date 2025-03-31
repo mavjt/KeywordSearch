@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Flurl;
+using KeywordSearch.Core.Types;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +15,12 @@ namespace KeywordSearch.Infrastructure.Services.Scrapers
 {
     internal class BingScraper : BaseScraper
     {
-        public BingScraper(ILogger<BingScraper> logger, IHostEnvironment hostingEnvironment) : base(logger, hostingEnvironment, "https://www.bing.com/")
+        
+        public BingScraper(ILogger<BingScraper> logger, IHostEnvironment hostingEnvironment, IOptions<SearchEngineConfig> searchEngineOptions) : base(logger, hostingEnvironment, searchEngineOptions)
         {
-            
+
+            config = searchEngineOptions.Value.GetEngineConfig(SearchEngine.Bing.Name);
+           
         }
 
 
@@ -22,19 +28,18 @@ namespace KeywordSearch.Infrastructure.Services.Scrapers
         {
             _logger.LogInformation($"Starting {nameof(BingScraper)}");
 
-            var SearchUrl = $"{_EngineBaseUrl}search?q={HttpUtility.UrlEncode(keywords)}&count={_MaxResults}";  //https://www.bing.com/search?q=insurance&count=100&pq=insurance
+            
+            var SearchUrl = String.Format(config.SearchUrl, HttpUtility.UrlEncode(keywords), _MaxResults);
+            //var SearchUrl = $"{_EngineBaseUrl}search?q={HttpUtility.UrlEncode(keywords)}&count={_MaxResults}";  //https://www.bing.com/search?q=insurance&count=100&pq=insurance
 
-            var rawHTML = await CallUrl(SearchUrl);
-
+            var rawHTML = await GetSearchResults(SearchUrl);
             _logger.LogDebug($"{rawHTML}");
 
-            string LinkClassMatch = "tilk";
+            var elements = ExtractElements(rawHTML, config.ResultItemElement);
+            _logger.LogInformation("{0} links found in the content", elements.Count);
 
-            var links = ExtractLinksByClass(rawHTML, LinkClassMatch);
-            _logger.LogInformation("{0} links found in the content", links.Count);
-
-            List<int> ranking = GetMatchingIndexList(urlToFind, links);
-            return ranking ?? [0];
+            List<int> ranking = GetMatchingIndexList(urlToFind, elements);
+            return ranking.Count < 1 ? [0] : ranking;
 
 
         }

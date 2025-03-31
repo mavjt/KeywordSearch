@@ -1,33 +1,23 @@
 import { React } from "react";
 import Checkbox from "./CheckBox";
 
-
-
-
-export default function SearchEngineList({ labels, register }) {
-    //function handleSelect(value, name) {  //https://www.codemzy.com/blog/react-select-all-checkbox
-    //    if (value) {
-    //        setSelected([...selected, name]);
-    //    } else {
-    //        setSelected(selected.filter((item) => item !== name));
-    //    }
-    //};
-
+export default function SearchEngineList({ labels, register }) {  
 
     return (
         labels.length === 0 ? (
-            <p>Loading...</p>
+            <p>Loading... you may need to refresh the page once the backend has finished loading.</p>
         ) : (
-            
-            <ul className="engines">
-                {labels.map((label) => (
-                    <li key={label.value} style={{ listStyle: 'none', marginBottom: '10px' }}>
-                        <Checkbox key={label.value} labelObj={label} register={register} />          
+             <>
+                <p>Search engines:</p>
+                <ul className="engines">
+                    {labels.map((label) => (
+                        <li key={label.value} style={{ listStyle: 'none', marginBottom: '10px' }}>
+                            <Checkbox key={label.value} labelObj={label} register={register} />          
                         
-                    </li>
-                ))}
-            </ul>
-
+                        </li>
+                    ))}
+                </ul>
+            </>
         )
     )
 }

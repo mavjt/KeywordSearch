@@ -7,9 +7,9 @@ export default function Checkbox({  register, labelObj }) {
     //};
     // render the checkbox
     return (
-        <div >
+        <>
             <input type="checkbox" id={`${labelObj.name}-checkbox`} value={labelObj.name}   {...register("searchEngines", { required: "At least one search engine required" })} />
             <label htmlFor={`${labelObj.name}-checkbox`} >{labelObj.name}</label>
-        </div>
+        </>
     );
 };

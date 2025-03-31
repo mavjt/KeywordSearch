@@ -40,7 +40,7 @@ function App() {
                         <td>{row.keywords}</td>
                         <td>{row.url}</td>
                         <td>{row.searchEngine}</td>
-                        <td>{row.sesults}</td>
+                        <td>{row.results}</td>
                         <td>{formatDate(row.searchDate)}</td>
                     </tr>
                 )}
@@ -53,18 +53,20 @@ function App() {
            
             <SearchForm availableEngines={engineLabels} populateHistory={() => populateHistory()} />
             <hr />
-            <p>Results</p>
+            
             <ShowHistoryButton handleClick={populateHistory} />
             {contents}
         </div>
     );
+
+    
+
     function formatDate(dt) {
         let actualdt = new Date(dt);
-        return actualdt.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        })
+        return `${actualdt.toLocaleTimeString("en-GB", {
+            hour: "2-digit",
+            minute: "2-digit",
+        })} ${actualdt.toLocaleDateString("en-GB")}`;
     }
     
 
@@ -74,12 +76,10 @@ function App() {
             const data = await response.json();
             setEngineLabels(data);
         }
-
+        else {
+            setEngineLabels([])
+        }
     }
-
-
-    
-
 }
 
 export default App;
