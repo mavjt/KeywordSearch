@@ -2,6 +2,19 @@
 
 This project is a development project created to show programming knowledge.
 
+## Setup
+Please create a SQL Server and then modify the connectionstring in appsettings.json called HistoryContext. 
+```
+"ConnectionStrings": {
+  "HistoryContext": "Server=(local);Database=KeywordSearch;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+},
+```
+In Visual Studio, Configure Statup Projects and set Multiple startup projects, selecting **KeywordSearch.client** followed by **KeywordSearch.Web**.
+
+
+The frontend is available on https://localhost:57082/
+
+## Comments
 I used a .NET 8 backend with React frontend.  The database is SQL Express.
 
 Given the restriction of not using a third party library, I chose to use Regex for matching results, but normally I would use Html Agility Pack.
